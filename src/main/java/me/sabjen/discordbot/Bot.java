@@ -119,12 +119,11 @@ public class Bot {
     }
 
     public static GuildManager getManager(Guild g) {
-        for(var manager : guildManagers) {
-            if(manager.getGuild().getIdLong() == g.getIdLong()) return manager;
+        for (var manager : guildManagers) {
+            if (manager.getGuild().getIdLong() == g.getIdLong()) return manager;
         }
 
-        Bot.logger.warn("Tried to get wrong Guild: " + g.getName());
-        throw new RuntimeException();
+        return null;
     }
 
     ///////////////////////////////////////////////////////////////////////

@@ -126,6 +126,7 @@ public class MainController extends FXMLController implements ConsoleNotifier {
         timerRows = new ArrayList<>(Arrays.asList(
                 new TimerRow(this, "Profile Photo Timer", BotTimers.avatarTimer),
                 new TimerRow(this, "Random Sound Timer", BotTimers.soundTimer),
+                new TimerRow(this, "Random Music Timer", BotTimers.musicTimer),
                 new TimerRow(this, "Announce Timer", BotTimers.announceTimer)
         ));
 
@@ -155,8 +156,19 @@ public class MainController extends FXMLController implements ConsoleNotifier {
     @FXML
     private Button addToDatabaseButton;
 
+    @FXML
+    private Button removeSelectedButton;
+
     public void openDatabasePane() {
         changePane(2);
+        refreshDatabase();
+    }
+
+    public void removeSelected() {
+        if(databaseTable.getSelectionModel().getSelectedItem() == null) return;
+
+        BotDatabase.getInstance().getConversations().delete(databaseTable.getSelectionModel().getSelectedItem());
+
         refreshDatabase();
     }
 
@@ -180,6 +192,10 @@ public class MainController extends FXMLController implements ConsoleNotifier {
 
         databaseTableColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
 
+        databaseTable.getSelectionModel().selectedIndexProperty().addListener((value, oldV, newV) -> {
+            removeSelectedButton.setDisable(newV == null);
+        });
+
         databaseTextArea.setOnKeyTyped((key) -> {
             addToDatabaseButton.setDisable(databaseTextArea.getText().trim().length() < 1);
         });
@@ -200,7 +216,6 @@ public class MainController extends FXMLController implements ConsoleNotifier {
 
     private void refreshDatabase() {
         String type = databaseChoice.getSelectionModel().getSelectedItem().getType();
-        System.out.println(type);
 
         var list = BotDatabase.getInstance().getConversations().getAll(type);
 

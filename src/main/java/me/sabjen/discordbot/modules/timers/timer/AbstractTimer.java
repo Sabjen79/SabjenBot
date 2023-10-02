@@ -1,20 +1,27 @@
 package me.sabjen.discordbot.modules.timers.timer;
 
+import javafx.util.Pair;
 import me.sabjen.discordbot.Bot;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 public abstract class AbstractTimer {
     private Thread timer;
-    private final Runnable runnable;
+    protected final Runnable runnable;
+    protected final Supplier<Long> time;
+    protected final TimeUnit timeUnit;
     protected Date endDate = null;
 
-    AbstractTimer(Runnable runnable) {
+    AbstractTimer(Runnable runnable, Supplier<Long> supp, TimeUnit timeUnit) {
         this.runnable = runnable;
+        this.time = supp;
+        this.timeUnit = timeUnit;
     }
 
     abstract void schedule() throws InterruptedException;
@@ -41,8 +48,6 @@ public abstract class AbstractTimer {
         if(timer != null) timer.interrupt();
         timer = null;
     }
-
-    Runnable getRunnable() { return runnable; }
 
     public String getTimeLeft() {
         if(endDate == null) return "00:00";

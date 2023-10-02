@@ -27,7 +27,7 @@ public class VoiceManager extends AutoListenerAdapter {
         voiceHandler = new VoiceAutoChannel(guild);
         connectedChannel = null;
 
-        BotTimers.newFixedRateTimer(this::checkForNewChannel, 1000, 10, TimeUnit.MINUTES)
+        BotTimers.newFixedRateTimer(this::checkForNewChannel, () -> (getConnectedChannel() == null) ? 300L : 5L, TimeUnit.SECONDS)
                 .start();
     }
 
@@ -44,7 +44,7 @@ public class VoiceManager extends AutoListenerAdapter {
     }
 
     private void checkForNewChannel() {
-        if(!Bot.debugCheck(guild)) return;
+        if(!Bot.debugCheck(guild) || Bot.getManager(guild) == null) return;
 
         var newChannel = voiceHandler.getBestChannel();
 

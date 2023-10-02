@@ -5,7 +5,9 @@ import me.sabjen.discordbot.modules.commands.CommandManager;
 import me.sabjen.discordbot.modules.voice.music.MusicManager;
 import me.sabjen.discordbot.modules.voice.VoiceManager;
 import me.sabjen.discordbot.modules.voice.music.musictaste.MusicTasteManager;
+import me.sabjen.discordbot.utils.RandomUtil;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.unions.AudioChannelUnion;
 
@@ -46,6 +48,15 @@ public class GuildManager {
         return guild;
     }
 
+    public User getRandomUser() {
+        User user = null;
+
+        while(user == null || Bot.isThisBot(user)) {
+            user = RandomUtil.randomFrom(guild.getMembers()).getUser();
+        }
+
+        return user;
+    }
     public TextChannel getMainChannel() {
         return getTextChannel(mainChannel);
     }

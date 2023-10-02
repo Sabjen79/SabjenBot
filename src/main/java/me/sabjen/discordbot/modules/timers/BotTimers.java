@@ -15,18 +15,22 @@ import net.dv8tion.jda.api.entities.Icon;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 public class BotTimers {
+    public static AbstractTimer newDelayedTimer(Runnable runnable, Supplier<Long> supp, TimeUnit timeUnit) {
+        return new DelayedTimer(runnable, supp, timeUnit);
+    }
     public static AbstractTimer newDelayedTimer(Runnable runnable, long delay, TimeUnit timeUnit) {
-        return new DelayedTimer(runnable, delay, timeUnit);
+        return new DelayedTimer(runnable, () -> delay, timeUnit);
     }
 
-    public static AbstractTimer newFixedRateTimer(Runnable runnable, long delay, long period, TimeUnit timeUnit) {
-        return new FixedRateTimer(runnable, delay, period, timeUnit);
+    public static AbstractTimer newFixedRateTimer(Runnable runnable, Supplier<Long> supp, TimeUnit timeUnit) {
+        return new FixedRateTimer(runnable, supp, timeUnit);
     }
 
     public static AbstractTimer newFixedRateTimer(Runnable runnable, long period, TimeUnit timeUnit) {
-        return new FixedRateTimer(runnable, 0, period, timeUnit);
+        return new FixedRateTimer(runnable, () -> period, timeUnit);
     }
 
     public static AbstractTimer avatarTimer = newFixedRateTimer(() -> {
@@ -38,7 +42,7 @@ public class BotTimers {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }, 1000L*60*5, 20, TimeUnit.MINUTES);
+    }, () -> RandomUtil.randomLong(15, 20), TimeUnit.MINUTES);
 
     public static AbstractTimer soundTimer = newFixedRateTimer(() -> {
         File sound = ResourceManager.getInstance().getRandomSound();
@@ -52,19 +56,29 @@ public class BotTimers {
                     .setSkippable(false).setHidden(true)
                     .build().accept();
         }
-    }, 1000L*5, RandomUtil.randomInt(5, 10), TimeUnit.MINUTES);
+    }, () -> RandomUtil.randomLong(5, 10), TimeUnit.MINUTES);
+
+    public static AbstractTimer musicTimer = newFixedRateTimer(() -> {
+        for(var guild : Bot.getGuilds()) {
+            var manager = Bot.getManager(guild);
+            if(manager == null || manager.getConnectedChannel() == null) continue;
+
+            TrackRequestBuilder.createRequest(manager.getMusicTasteManager().getRandomSong(), guild)
+                    .setUser(Bot.getUser())
+                    .setSkippable(false).setHidden(false)
+                    .build().accept();
+
+        }
+    }, () -> RandomUtil.randomLong(15, 30), TimeUnit.MINUTES);
 
     public static AbstractTimer announceTimer = newFixedRateTimer(() -> {
-        for(var guild : Bot.getGuilds()) {
-            Conversation.newAnnounceChat(guild.getIdLong(), guild.getSystemChannel());
-        }
-    }, 1000L*60*15, 15, TimeUnit.MINUTES);
+        Conversation.newAnnounceChat();
+    }, () -> RandomUtil.randomLong(15, 30), TimeUnit.MINUTES);
 
     public static void globalTimers() {
         avatarTimer.start();
-
         soundTimer.start();
-
+        musicTimer.start();
         announceTimer.start();
     }
 }

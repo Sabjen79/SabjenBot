@@ -26,6 +26,7 @@ public class MusicManager {
     private static AudioPlayerManager playerManager;
     public static AudioPlayerManager getPlayerManager() {
         if(playerManager == null) playerManager = new DefaultAudioPlayerManager();
+
         playerManager.getConfiguration().setFrameBufferFactory(NonAllocatingAudioFrameBuffer::new);
         AudioSourceManagers.registerLocalSource(playerManager);
         AudioSourceManagers.registerRemoteSources(playerManager);

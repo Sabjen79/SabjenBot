@@ -50,6 +50,14 @@ public class ConversationsDatabase extends AbstractTable {
         }
     }
 
+    public void delete(String text) {
+        try {
+            connection.prepareStatement("DELETE FROM CONVERSATIONS WHERE TEXT = '" + text + "'").execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void add(String type, String text) {
         try {
             connection.prepareStatement("INSERT INTO conversations VALUES ( '" + type + "' , '" + text + "' )").execute();

@@ -35,6 +35,8 @@ public class MusicChannelHistory {
                     SongTaste song = new SongTaste(guild, url);
                     MusicTasteDatabase.getInstance().addSong(song);
                 }
+
+                if(i % 100 == 0) Bot.logger.info("Am invatat " + i + " melodii noi din " + guild.getName());
             }
         }
 

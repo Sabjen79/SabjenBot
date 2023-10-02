@@ -12,7 +12,7 @@ public class SongTaste {
 
     public SongTaste(Guild guild, String link) {
         this.guild = guild;
-        this.link = link;
+        this.link = link.replaceAll("'", "");
         lastUpdated = new Date(0);
         rating = 0;
     }

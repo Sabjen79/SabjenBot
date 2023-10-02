@@ -2,8 +2,11 @@ package me.sabjen.discordbot.modules.chat.base;
 
 import me.sabjen.discordbot.Bot;
 import me.sabjen.discordbot.database.BotDatabase;
+import me.sabjen.discordbot.modules.GuildManager;
 import me.sabjen.discordbot.modules.chat.ChatManager;
+import me.sabjen.discordbot.utils.RandomUtil;
 import me.sabjen.discordbot.utils.messages.MessageBuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
@@ -60,17 +63,20 @@ public class Conversation {
         conv.advance(null);
     }
 
-    public static void newAnnounceChat(long id, MessageChannel m) {
+    public static void newAnnounceChat() {
         var str = BotDatabase.getInstance().getConversations().getRandom("ANNOUNCE");
         if(str == null) return;
 
-        Conversation conv = new Conversation(id, m, null, str);
-        ChatManager.getInstance().addConversation(conv);
-        conv.advance(null);
+        for(var guild : Bot.getGuilds()) {
+            Conversation conv = new Conversation(guild.getIdLong(), guild.getSystemChannel(), null, str);
+            ChatManager.getInstance().addConversation(conv);
+            conv.advance(null);
+        }
     }
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////
+    private Guild guild;
     private long cooldownID;
     private MessageChannel messageChannel;
     private User user;
@@ -86,10 +92,13 @@ public class Conversation {
         this.messages = msg.split("\\|\\|");
         this.messagesIndex = 0;
         this.paused = false;
+
+        guild = Bot.getJDA().getGuildById(cid);
     }
 
     public boolean check(MessageReceivedEvent event) {
-        if(user == null) return true;
+        if(event == null) return true;
+        if(user == null) user = event.getAuthor();
         if(event.getAuthor().getIdLong() != user.getIdLong() ||
             event.getChannel().getIdLong() != messageChannel.getIdLong()) return false;
 
@@ -111,6 +120,9 @@ public class Conversation {
         builder.setChannel(messageChannel);
 
         if(user != null) builder.replaceMentions(user);
+        else if(guild != null) builder.replaceMentions(Bot.getManager(guild).getRandomUser());
+
+        if(user == null && event != null) user = event.getAuthor();
 
         builder.addConsumer((v) -> paused = false)
                 .advancedFormatting();

@@ -60,7 +60,7 @@
                         </content>
                      </ScrollPane>
                   </children></Pane>
-               <Pane fx:id="databasePane" centerShape="false" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <Pane fx:id="databasePane" centerShape="false" prefHeight="200.0" prefWidth="200.0">
                   <StackPane.margin>
                      <Insets left="50.0" top="30.0" />
                   </StackPane.margin>
@@ -70,9 +70,10 @@
                          <TableColumn fx:id="databaseTableColumn" editable="false" prefWidth="636.7999634742737" resizable="false" sortable="false" text="Text" />
                        </columns>
                      </TableView>
-                     <ChoiceBox fx:id="databaseChoice" layoutX="249.0" layoutY="2.0" prefWidth="150.0" />
+                     <ChoiceBox fx:id="databaseChoice" layoutX="4.0" prefHeight="28.0" prefWidth="160.0" />
                      <TextArea fx:id="databaseTextArea" layoutX="4.0" layoutY="329.0" prefHeight="47.0" prefWidth="525.0" />
                      <Button fx:id="addToDatabaseButton" disable="true" layoutX="537.0" layoutY="329.0" mnemonicParsing="false" onMouseClicked="#addToDatabase" prefHeight="47.0" prefWidth="106.0" styleClass="blueButton" text="Add to database" />
+                     <Button fx:id="removeSelectedButton" layoutX="172.0" layoutY="-2.0" mnemonicParsing="false" onMouseClicked="#removeSelected" prefHeight="32.0" prefWidth="132.0" styleClass="blueButton" text="Remove Selected" />
                   </children></Pane>
                <Pane fx:id="settingsPane" prefHeight="430.0" prefWidth="650.0" visible="false">
                   <children>

@@ -4,18 +4,14 @@ import me.sabjen.discordbot.Bot;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 public class FixedRateTimer extends AbstractTimer {
-    private long delay;
-    private final long period;
-    private final TimeUnit timeUnit;
+    private int delay;
 
-    public FixedRateTimer(Runnable runnable, long delay, long period, TimeUnit unit) {
-        super(runnable);
-
-        this.delay = delay;
-        this.period = period;
-        this.timeUnit = unit;
+    public FixedRateTimer(Runnable runnable, Supplier<Long> supplier, TimeUnit unit) {
+        super(runnable, supplier, unit);
+        delay = 5;
     }
 
     @Override
@@ -25,9 +21,10 @@ public class FixedRateTimer extends AbstractTimer {
         Thread.sleep(delay);
 
         for(int i = 0; i < 10000; i++) {
-            getRunnable().run();
-
+            Long period = time.get();
             endDate = new Date(new Date().getTime() + timeUnit.toMillis(period));
+
+            runnable.run();
 
             Thread.sleep(timeUnit.toMillis(period));
         }
