@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS conversations;
+CREATE TABLE conversations(
+    TYPE VARCHAR2(255),
+    TEXT VARCHAR2(255)
+);

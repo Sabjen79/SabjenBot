@@ -1,0 +1,72 @@
+#anchor_root {
+    -fx-background-color: transparent;
+}
+
+#root {
+    -fx-background-color: #161e21;
+    -fx-background-radius: 10;
+}
+
+Hyperlink {
+    -fx-border-color: transparent;
+}
+
+.topButton:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.topButton {
+    -fx-background-color: transparent;
+}
+
+#close_button {
+    -fx-background-radius: 0 10 0 0;
+}
+
+#close_button:hover {
+    -fx-background-color: rgba(255, 0, 0, 0.8);
+}
+
+.blueButton:hover {
+    -fx-background-color: #006d97;
+}
+
+.blueButton:pressed {
+    -fx-border-color: #004d6a;
+}
+
+.blueButton {
+    -fx-background-color: #004d6a;
+    -fx-border-color: #006d97;
+    -fx-text-fill: #ffffff;
+}
+
+.roboto {
+    -fx-font-family: "Roboto", sans-serif;
+}
+
+.scroll-pane {
+    -fx-background-color: #161e21;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: white;
+    -fx-background-radius: 5em;
+}

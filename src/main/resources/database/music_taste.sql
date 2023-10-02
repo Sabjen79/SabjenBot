@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS music_taste;
+DROP TABLE IF EXISTS music_taste_dates;
+
+CREATE TABLE music_taste (
+    GUILD_ID VARCHAR2(30),
+    ID VARCHAR2(255),
+    RATING NUMBER(3),
+    LAST_UPDATED TIMESTAMP,
+    PRIMARY KEY(GUILD_ID, ID)
+);
+
+CREATE TABLE music_taste_dates (
+    ID VARCHAR2(255),
+    LAST_UPDATED TIMESTAMP
+);
