@@ -4,7 +4,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -12,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
@@ -27,12 +29,12 @@
            </columnConstraints>
            <rowConstraints>
              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
-               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="8.400006103515622" prefHeight="11.599987792968747" vgrow="SOMETIMES" />
-               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="44.000018310546885" vgrow="SOMETIMES" />
-               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="115.19998168945312" vgrow="SOMETIMES" />
+               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="49.800012207031244" vgrow="SOMETIMES" />
+               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="73.79998779296875" vgrow="SOMETIMES" />
+               <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.399993896484375" vgrow="SOMETIMES" />
            </rowConstraints>
             <children>
-               <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseDragged="#topBarDrag" onMousePressed="#topBarPress" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT">
+               <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseDragged="#topBarDrag" onMousePressed="#topBarPress" prefHeight="30.0" prefWidth="400.0" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT">
                   <children>
                      <Pane onMouseClicked="#minimizeApp" prefHeight="30.0" prefWidth="50.0" styleClass="topButton">
                         <children>
@@ -52,26 +54,24 @@
                      </Pane>
                   </children>
                </HBox>
-               <TilePane prefHeight="132.0" prefWidth="300.0" vgap="15.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                   <children>
-                     <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="399.0" text="Select Mode To Start" textAlignment="CENTER" textFill="WHITE" TilePane.alignment="CENTER">
+                     <Label alignment="BOTTOM_CENTER" prefHeight="47.0" prefWidth="318.0" text="The bot's database is absent. To create a new one, insert the bot's Token below." textAlignment="CENTER" textFill="WHITE" wrapText="true">
                         <font>
-                           <Font size="18.0" />
+                           <Font name="System Bold" size="12.0" />
                         </font>
                      </Label>
                   </children>
-                  <opaqueInsets>
-                     <Insets />
-                  </opaqueInsets>
-                  <padding>
-                     <Insets top="10.0" />
-                  </padding>
-               </TilePane>
-               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               </VBox>
+               <Hyperlink alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#redirectBrowser" prefHeight="2.0" prefWidth="219.0" text="The bot's token can be found here." textAlignment="CENTER" underline="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.rowIndex="2">
                   <children>
-                     <Button mnemonicParsing="false" onMouseClicked="#normalMode" prefHeight="29.0" prefWidth="112.0" styleClass="blueButton" text="Normal Mode" />
-                     <Button contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#debugMode" prefHeight="29.0" prefWidth="112.0" styleClass="blueButton" text="DEBUG Mode" textAlignment="CENTER" />
+                     <TextField fx:id="tokenField" onKeyTyped="#onInputChanged" prefHeight="26.0" prefWidth="267.0" />
+                     <Button fx:id="submitToken" disable="true" mnemonicParsing="false" onMouseClicked="#onSubmit" styleClass="blueButton" text="Submit" />
                   </children>
+                  <GridPane.margin>
+                     <Insets />
+                  </GridPane.margin>
                </HBox>
             </children>
          </GridPane>
@@ -86,7 +86,7 @@
             </color></DropShadow>
       </effect></AnchorPane>
    <stylesheets>
-      <URL value="@StartUI.css" />
+      <URL value="@ResourceAlert.css" />
       <URL value="@stylesheet.css" />
    </stylesheets>
 </Scene>
