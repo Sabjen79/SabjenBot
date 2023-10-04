@@ -7,3 +7,4 @@ resources/token.txt
 *.png
 .*/
 !/.gitignore
+build/
