@@ -21,7 +21,7 @@ public abstract class FXMLView {
         path = p;
 
         try {
-            var loader = new FXMLLoader(getClass().getResource(path));
+            var loader = new FXMLLoader(getClass().getClassLoader().getResource(path));
             loader.setController(controller);
             controller.setStage(stage);
 

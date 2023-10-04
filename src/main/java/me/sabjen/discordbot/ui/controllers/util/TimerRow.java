@@ -19,7 +19,7 @@ public class TimerRow {
     public TimerRow(MainController controller, String sLabel, AbstractTimer timer) {
         try {
             this.timer = timer;
-            Pane pane = FXMLLoader.load(getClass().getResource("/ui/TimerRow.fxml"));
+            Pane pane = FXMLLoader.load(getClass().getClassLoader().getResource("ui/TimerRow.fxml"));
             controller.getTimersVbox().getChildren().add(pane);
 
             name = (Label) pane.lookup("#name");
@@ -39,7 +39,7 @@ public class TimerRow {
 
     public void refresh() {
         Platform.runLater(() -> {
-            time.setText(timer.getTimeLeft());
+            if(time != null) time.setText(timer.getTimeLeft());
         });
 
     }

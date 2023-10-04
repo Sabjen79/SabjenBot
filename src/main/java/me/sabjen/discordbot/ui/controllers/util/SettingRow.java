@@ -21,7 +21,7 @@ public class SettingRow {
 
     public SettingRow(MainController controller, String sLabel, String sDescription, Pattern regex, String d) {
         try {
-            Pane pane = FXMLLoader.load(getClass().getResource("/ui/SettingRow.fxml"));
+            Pane pane = FXMLLoader.load(getClass().getClassLoader().getResource("ui/SettingRow.fxml"));
             controller.getSettingsVbox().getChildren().add(pane);
 
             label = (Label) pane.lookup("#label");

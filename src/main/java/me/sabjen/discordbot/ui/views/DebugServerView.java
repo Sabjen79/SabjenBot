@@ -7,6 +7,6 @@ import me.sabjen.discordbot.ui.controllers.ResourceAlertController;
 
 public class DebugServerView extends FXMLView {
     public DebugServerView(Stage s) {
-        super("/ui/DebugServer.fxml", new DebugServerController(), s);
+        super("ui/DebugServer.fxml", new DebugServerController(), s);
     }
 }

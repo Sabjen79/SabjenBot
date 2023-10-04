@@ -8,6 +8,6 @@ import me.sabjen.discordbot.ui.controllers.ResourceAlertController;
 
 public class MainView extends FXMLView {
     public MainView(Stage s) {
-        super("/ui/MainUI.fxml", new MainController(), s);
+        super("ui/MainUI.fxml", new MainController(), s);
     }
 }
